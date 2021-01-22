@@ -1,0 +1,1193 @@
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.HDB3_Codec,"ax",%progbits
+  20              		.align	2
+  21              		.global	HDB3_Codec
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	HDB3_Codec, %function
+  25              	HDB3_Codec:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include "project.h"
+  13:main.c        **** 
+  14:main.c        **** void HDB3_Codec(int* code, int sizeArey); // Прототип функції
+  15:main.c        **** //void outIDAC(int* code, int sizeArey);
+  16:main.c        **** 
+  17:main.c        **** #define HIGH_LEVEL 255
+  18:main.c        **** #define LOW_LEVEL  0
+  19:main.c        **** #define GND_LEVEL  128
+  20:main.c        **** 
+  21:main.c        **** int code [3] = {1011, 0000, 1010};
+  22:main.c        **** 
+  23:main.c        **** int main(void)
+  24:main.c        **** {
+  25:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  26:main.c        ****     IDAC8_1_Start(); // Ініціалізація iDAC і початок його роботи.
+  27:main.c        ****     
+  28:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  29:main.c        **** 
+  30:main.c        ****     for(;;)
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 2
+
+
+  31:main.c        ****     {
+  32:main.c        **** 
+  33:main.c        ****         HDB3_Codec(code, 3);
+  34:main.c        ****         
+  35:main.c        ****     }
+  36:main.c        **** }
+  37:main.c        **** 
+  38:main.c        **** void HDB3_Codec(int* code, int sizeArey)
+  39:main.c        **** {
+  28              		.loc 1 39 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              		.cfi_def_cfa_offset 24
+  35              		.cfi_offset 3, -24
+  36              		.cfi_offset 4, -20
+  37              		.cfi_offset 5, -16
+  38              		.cfi_offset 6, -12
+  39              		.cfi_offset 7, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0546     		mov	r5, r0
+  42 0004 0F46     		mov	r7, r1
+  43              	.LVL1:
+  40:main.c        **** 
+  41:main.c        ****     int i;
+  42:main.c        ****     for(i = 0; i < sizeArey; i++)
+  44              		.loc 1 42 0
+  45 0006 0024     		movs	r4, #0
+  46 0008 47E0     		b	.L2
+  47              	.LVL2:
+  48              	.L6:
+  43:main.c        ****     {
+  44:main.c        ****         if (code[i] == 1011)
+  49              		.loc 1 44 0
+  50 000a A600     		lsls	r6, r4, #2
+  51 000c 55F82420 		ldr	r2, [r5, r4, lsl #2]
+  52 0010 40F2F333 		movw	r3, #1011
+  53 0014 9A42     		cmp	r2, r3
+  54 0016 11D1     		bne	.L3
+  45:main.c        ****         {
+  46:main.c        ****           IDAC8_1_SetValue(LOW_LEVEL);
+  55              		.loc 1 46 0
+  56 0018 0020     		movs	r0, #0
+  57 001a FFF7FEFF 		bl	IDAC8_1_SetValue
+  58              	.LVL3:
+  47:main.c        ****         CyDelay(100);
+  59              		.loc 1 47 0
+  60 001e 6420     		movs	r0, #100
+  61 0020 FFF7FEFF 		bl	CyDelay
+  62              	.LVL4:
+  48:main.c        ****           IDAC8_1_SetValue(GND_LEVEL);
+  63              		.loc 1 48 0
+  64 0024 8020     		movs	r0, #128
+  65 0026 FFF7FEFF 		bl	IDAC8_1_SetValue
+  66              	.LVL5:
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 3
+
+
+  49:main.c        ****         CyDelay(100);
+  67              		.loc 1 49 0
+  68 002a 6420     		movs	r0, #100
+  69 002c FFF7FEFF 		bl	CyDelay
+  70              	.LVL6:
+  50:main.c        ****           IDAC8_1_SetValue(GND_LEVEL);
+  71              		.loc 1 50 0
+  72 0030 8020     		movs	r0, #128
+  73 0032 FFF7FEFF 		bl	IDAC8_1_SetValue
+  74              	.LVL7:
+  51:main.c        ****         CyDelay(100);
+  75              		.loc 1 51 0
+  76 0036 6420     		movs	r0, #100
+  77 0038 FFF7FEFF 		bl	CyDelay
+  78              	.LVL8:
+  79              	.L3:
+  52:main.c        ****         }
+  53:main.c        ****         if(code[i] == 0000)
+  80              		.loc 1 53 0
+  81 003c AB59     		ldr	r3, [r5, r6]
+  82 003e 8BB9     		cbnz	r3, .L4
+  54:main.c        ****         {
+  55:main.c        ****            IDAC8_1_SetValue(HIGH_LEVEL);
+  83              		.loc 1 55 0
+  84 0040 FF20     		movs	r0, #255
+  85 0042 FFF7FEFF 		bl	IDAC8_1_SetValue
+  86              	.LVL9:
+  56:main.c        ****         CyDelay(100);
+  87              		.loc 1 56 0
+  88 0046 6420     		movs	r0, #100
+  89 0048 FFF7FEFF 		bl	CyDelay
+  90              	.LVL10:
+  57:main.c        ****            IDAC8_1_SetValue(GND_LEVEL);
+  91              		.loc 1 57 0
+  92 004c 8020     		movs	r0, #128
+  93 004e FFF7FEFF 		bl	IDAC8_1_SetValue
+  94              	.LVL11:
+  58:main.c        ****         CyDelay(100);
+  95              		.loc 1 58 0
+  96 0052 6420     		movs	r0, #100
+  97 0054 FFF7FEFF 		bl	CyDelay
+  98              	.LVL12:
+  59:main.c        ****            IDAC8_1_SetValue(LOW_LEVEL);
+  99              		.loc 1 59 0
+ 100 0058 0020     		movs	r0, #0
+ 101 005a FFF7FEFF 		bl	IDAC8_1_SetValue
+ 102              	.LVL13:
+  60:main.c        ****         CyDelay(100);
+ 103              		.loc 1 60 0
+ 104 005e 6420     		movs	r0, #100
+ 105 0060 FFF7FEFF 		bl	CyDelay
+ 106              	.LVL14:
+ 107              	.L4:
+  61:main.c        ****         }
+  62:main.c        ****         if(code[i] == 1010)
+ 108              		.loc 1 62 0
+ 109 0064 AA59     		ldr	r2, [r5, r6]
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 4
+
+
+ 110 0066 40F2F233 		movw	r3, #1010
+ 111 006a 9A42     		cmp	r2, r3
+ 112 006c 11D1     		bne	.L5
+  63:main.c        ****         {
+  64:main.c        ****            IDAC8_1_SetValue(LOW_LEVEL);
+ 113              		.loc 1 64 0
+ 114 006e 0020     		movs	r0, #0
+ 115 0070 FFF7FEFF 		bl	IDAC8_1_SetValue
+ 116              	.LVL15:
+  65:main.c        ****         CyDelay(100);
+ 117              		.loc 1 65 0
+ 118 0074 6420     		movs	r0, #100
+ 119 0076 FFF7FEFF 		bl	CyDelay
+ 120              	.LVL16:
+  66:main.c        ****            IDAC8_1_SetValue(HIGH_LEVEL);
+ 121              		.loc 1 66 0
+ 122 007a FF20     		movs	r0, #255
+ 123 007c FFF7FEFF 		bl	IDAC8_1_SetValue
+ 124              	.LVL17:
+  67:main.c        ****         CyDelay(100);
+ 125              		.loc 1 67 0
+ 126 0080 6420     		movs	r0, #100
+ 127 0082 FFF7FEFF 		bl	CyDelay
+ 128              	.LVL18:
+  68:main.c        ****            IDAC8_1_SetValue(LOW_LEVEL);
+ 129              		.loc 1 68 0
+ 130 0086 0020     		movs	r0, #0
+ 131 0088 FFF7FEFF 		bl	IDAC8_1_SetValue
+ 132              	.LVL19:
+  69:main.c        ****         CyDelay(100);
+ 133              		.loc 1 69 0
+ 134 008c 6420     		movs	r0, #100
+ 135 008e FFF7FEFF 		bl	CyDelay
+ 136              	.LVL20:
+ 137              	.L5:
+  70:main.c        ****         }
+  71:main.c        ****         CyDelay(100);
+ 138              		.loc 1 71 0 discriminator 2
+ 139 0092 6420     		movs	r0, #100
+ 140 0094 FFF7FEFF 		bl	CyDelay
+ 141              	.LVL21:
+  42:main.c        ****     {
+ 142              		.loc 1 42 0 discriminator 2
+ 143 0098 0134     		adds	r4, r4, #1
+ 144              	.LVL22:
+ 145              	.L2:
+  42:main.c        ****     {
+ 146              		.loc 1 42 0 is_stmt 0 discriminator 1
+ 147 009a BC42     		cmp	r4, r7
+ 148 009c B5DB     		blt	.L6
+  72:main.c        ****     }
+  73:main.c        **** }
+ 149              		.loc 1 73 0 is_stmt 1
+ 150 009e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 151              		.cfi_endproc
+ 152              	.LFE64:
+ 153              		.size	HDB3_Codec, .-HDB3_Codec
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 5
+
+
+ 154              		.section	.text.main,"ax",%progbits
+ 155              		.align	2
+ 156              		.global	main
+ 157              		.thumb
+ 158              		.thumb_func
+ 159              		.type	main, %function
+ 160              	main:
+ 161              	.LFB63:
+  24:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 162              		.loc 1 24 0
+ 163              		.cfi_startproc
+ 164              		@ Volatile: function does not return.
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167 0000 08B5     		push	{r3, lr}
+ 168              		.cfi_def_cfa_offset 8
+ 169              		.cfi_offset 3, -8
+ 170              		.cfi_offset 14, -4
+  25:main.c        ****     IDAC8_1_Start(); // Ініціалізація iDAC і початок його роботи.
+ 171              		.loc 1 25 0
+ 172              		.syntax unified
+ 173              	@ 25 "main.c" 1
+ 174 0002 62B6     		CPSIE   i
+ 175              	@ 0 "" 2
+  26:main.c        ****     
+ 176              		.loc 1 26 0
+ 177              		.thumb
+ 178              		.syntax unified
+ 179 0004 FFF7FEFF 		bl	IDAC8_1_Start
+ 180              	.LVL23:
+ 181              	.L9:
+  33:main.c        ****         
+ 182              		.loc 1 33 0 discriminator 1
+ 183 0008 0321     		movs	r1, #3
+ 184 000a 0248     		ldr	r0, .L11
+ 185 000c FFF7FEFF 		bl	HDB3_Codec
+ 186              	.LVL24:
+ 187 0010 FAE7     		b	.L9
+ 188              	.L12:
+ 189 0012 00BF     		.align	2
+ 190              	.L11:
+ 191 0014 00000000 		.word	.LANCHOR0
+ 192              		.cfi_endproc
+ 193              	.LFE63:
+ 194              		.size	main, .-main
+ 195              		.global	code
+ 196              		.data
+ 197              		.align	2
+ 198              		.set	.LANCHOR0,. + 0
+ 199              		.type	code, %object
+ 200              		.size	code, 12
+ 201              	code:
+ 202 0000 F3030000 		.word	1011
+ 203 0004 00000000 		.word	0
+ 204 0008 F2030000 		.word	1010
+ 205              		.text
+ 206              	.Letext0:
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 6
+
+
+ 207              		.file 2 "f:\\psoccreatorsetup\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 208              		.file 3 "f:\\psoccreatorsetup\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-
+ 209              		.file 4 "Generated_Source\\PSoC5/core_cm3.h"
+ 210              		.file 5 "Generated_Source\\PSoC5/IDAC8_1.h"
+ 211              		.file 6 "Generated_Source\\PSoC5/CyLib.h"
+ 212              		.section	.debug_info,"",%progbits
+ 213              	.Ldebug_info0:
+ 214 0000 EA020000 		.4byte	0x2ea
+ 215 0004 0400     		.2byte	0x4
+ 216 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 217 000a 04       		.byte	0x4
+ 218 000b 01       		.uleb128 0x1
+ 219 000c 79000000 		.4byte	.LASF22
+ 220 0010 0C       		.byte	0xc
+ 221 0011 47000000 		.4byte	.LASF23
+ 222 0015 4E000000 		.4byte	.LASF24
+ 223 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 224 001d 00000000 		.4byte	0
+ 225 0021 00000000 		.4byte	.Ldebug_line0
+ 226 0025 02       		.uleb128 0x2
+ 227 0026 01       		.byte	0x1
+ 228 0027 06       		.byte	0x6
+ 229 0028 8C010000 		.4byte	.LASF0
+ 230 002c 02       		.uleb128 0x2
+ 231 002d 01       		.byte	0x1
+ 232 002e 08       		.byte	0x8
+ 233 002f 5B010000 		.4byte	.LASF1
+ 234 0033 02       		.uleb128 0x2
+ 235 0034 02       		.byte	0x2
+ 236 0035 05       		.byte	0x5
+ 237 0036 B4010000 		.4byte	.LASF2
+ 238 003a 02       		.uleb128 0x2
+ 239 003b 02       		.byte	0x2
+ 240 003c 07       		.byte	0x7
+ 241 003d 43010000 		.4byte	.LASF3
+ 242 0041 03       		.uleb128 0x3
+ 243 0042 A4010000 		.4byte	.LASF9
+ 244 0046 02       		.byte	0x2
+ 245 0047 3F       		.byte	0x3f
+ 246 0048 4C000000 		.4byte	0x4c
+ 247 004c 02       		.uleb128 0x2
+ 248 004d 04       		.byte	0x4
+ 249 004e 05       		.byte	0x5
+ 250 004f 77010000 		.4byte	.LASF4
+ 251 0053 02       		.uleb128 0x2
+ 252 0054 04       		.byte	0x4
+ 253 0055 07       		.byte	0x7
+ 254 0056 0F010000 		.4byte	.LASF5
+ 255 005a 02       		.uleb128 0x2
+ 256 005b 08       		.byte	0x8
+ 257 005c 05       		.byte	0x5
+ 258 005d 00000000 		.4byte	.LASF6
+ 259 0061 02       		.uleb128 0x2
+ 260 0062 08       		.byte	0x8
+ 261 0063 07       		.byte	0x7
+ 262 0064 2C010000 		.4byte	.LASF7
+ 263 0068 04       		.uleb128 0x4
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 7
+
+
+ 264 0069 04       		.byte	0x4
+ 265 006a 05       		.byte	0x5
+ 266 006b 696E7400 		.ascii	"int\000"
+ 267 006f 02       		.uleb128 0x2
+ 268 0070 04       		.byte	0x4
+ 269 0071 07       		.byte	0x7
+ 270 0072 29000000 		.4byte	.LASF8
+ 271 0076 03       		.uleb128 0x3
+ 272 0077 BE010000 		.4byte	.LASF10
+ 273 007b 03       		.byte	0x3
+ 274 007c 2C       		.byte	0x2c
+ 275 007d 41000000 		.4byte	0x41
+ 276 0081 02       		.uleb128 0x2
+ 277 0082 04       		.byte	0x4
+ 278 0083 04       		.byte	0x4
+ 279 0084 AE010000 		.4byte	.LASF11
+ 280 0088 02       		.uleb128 0x2
+ 281 0089 08       		.byte	0x8
+ 282 008a 04       		.byte	0x4
+ 283 008b 80010000 		.4byte	.LASF12
+ 284 008f 02       		.uleb128 0x2
+ 285 0090 01       		.byte	0x1
+ 286 0091 08       		.byte	0x8
+ 287 0092 72010000 		.4byte	.LASF13
+ 288 0096 02       		.uleb128 0x2
+ 289 0097 04       		.byte	0x4
+ 290 0098 07       		.byte	0x7
+ 291 0099 C6010000 		.4byte	.LASF14
+ 292 009d 02       		.uleb128 0x2
+ 293 009e 08       		.byte	0x8
+ 294 009f 04       		.byte	0x4
+ 295 00a0 98010000 		.4byte	.LASF15
+ 296 00a4 05       		.uleb128 0x5
+ 297 00a5 21010000 		.4byte	.LASF25
+ 298 00a9 01       		.byte	0x1
+ 299 00aa 26       		.byte	0x26
+ 300 00ab 00000000 		.4byte	.LFB64
+ 301 00af A0000000 		.4byte	.LFE64-.LFB64
+ 302 00b3 01       		.uleb128 0x1
+ 303 00b4 9C       		.byte	0x9c
+ 304 00b5 59020000 		.4byte	0x259
+ 305 00b9 06       		.uleb128 0x6
+ 306 00ba 87010000 		.4byte	.LASF16
+ 307 00be 01       		.byte	0x1
+ 308 00bf 26       		.byte	0x26
+ 309 00c0 59020000 		.4byte	0x259
+ 310 00c4 00000000 		.4byte	.LLST0
+ 311 00c8 06       		.uleb128 0x6
+ 312 00c9 69010000 		.4byte	.LASF17
+ 313 00cd 01       		.byte	0x1
+ 314 00ce 26       		.byte	0x26
+ 315 00cf 68000000 		.4byte	0x68
+ 316 00d3 1E000000 		.4byte	.LLST1
+ 317 00d7 07       		.uleb128 0x7
+ 318 00d8 6900     		.ascii	"i\000"
+ 319 00da 01       		.byte	0x1
+ 320 00db 29       		.byte	0x29
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 8
+
+
+ 321 00dc 68000000 		.4byte	0x68
+ 322 00e0 3C000000 		.4byte	.LLST2
+ 323 00e4 08       		.uleb128 0x8
+ 324 00e5 1E000000 		.4byte	.LVL3
+ 325 00e9 CC020000 		.4byte	0x2cc
+ 326 00ed F7000000 		.4byte	0xf7
+ 327 00f1 09       		.uleb128 0x9
+ 328 00f2 01       		.uleb128 0x1
+ 329 00f3 50       		.byte	0x50
+ 330 00f4 01       		.uleb128 0x1
+ 331 00f5 30       		.byte	0x30
+ 332 00f6 00       		.byte	0
+ 333 00f7 08       		.uleb128 0x8
+ 334 00f8 24000000 		.4byte	.LVL4
+ 335 00fc D7020000 		.4byte	0x2d7
+ 336 0100 0B010000 		.4byte	0x10b
+ 337 0104 09       		.uleb128 0x9
+ 338 0105 01       		.uleb128 0x1
+ 339 0106 50       		.byte	0x50
+ 340 0107 02       		.uleb128 0x2
+ 341 0108 08       		.byte	0x8
+ 342 0109 64       		.byte	0x64
+ 343 010a 00       		.byte	0
+ 344 010b 08       		.uleb128 0x8
+ 345 010c 2A000000 		.4byte	.LVL5
+ 346 0110 CC020000 		.4byte	0x2cc
+ 347 0114 1F010000 		.4byte	0x11f
+ 348 0118 09       		.uleb128 0x9
+ 349 0119 01       		.uleb128 0x1
+ 350 011a 50       		.byte	0x50
+ 351 011b 02       		.uleb128 0x2
+ 352 011c 09       		.byte	0x9
+ 353 011d 80       		.byte	0x80
+ 354 011e 00       		.byte	0
+ 355 011f 08       		.uleb128 0x8
+ 356 0120 30000000 		.4byte	.LVL6
+ 357 0124 D7020000 		.4byte	0x2d7
+ 358 0128 33010000 		.4byte	0x133
+ 359 012c 09       		.uleb128 0x9
+ 360 012d 01       		.uleb128 0x1
+ 361 012e 50       		.byte	0x50
+ 362 012f 02       		.uleb128 0x2
+ 363 0130 08       		.byte	0x8
+ 364 0131 64       		.byte	0x64
+ 365 0132 00       		.byte	0
+ 366 0133 08       		.uleb128 0x8
+ 367 0134 36000000 		.4byte	.LVL7
+ 368 0138 CC020000 		.4byte	0x2cc
+ 369 013c 47010000 		.4byte	0x147
+ 370 0140 09       		.uleb128 0x9
+ 371 0141 01       		.uleb128 0x1
+ 372 0142 50       		.byte	0x50
+ 373 0143 02       		.uleb128 0x2
+ 374 0144 09       		.byte	0x9
+ 375 0145 80       		.byte	0x80
+ 376 0146 00       		.byte	0
+ 377 0147 08       		.uleb128 0x8
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 9
+
+
+ 378 0148 3C000000 		.4byte	.LVL8
+ 379 014c D7020000 		.4byte	0x2d7
+ 380 0150 5B010000 		.4byte	0x15b
+ 381 0154 09       		.uleb128 0x9
+ 382 0155 01       		.uleb128 0x1
+ 383 0156 50       		.byte	0x50
+ 384 0157 02       		.uleb128 0x2
+ 385 0158 08       		.byte	0x8
+ 386 0159 64       		.byte	0x64
+ 387 015a 00       		.byte	0
+ 388 015b 08       		.uleb128 0x8
+ 389 015c 46000000 		.4byte	.LVL9
+ 390 0160 CC020000 		.4byte	0x2cc
+ 391 0164 6F010000 		.4byte	0x16f
+ 392 0168 09       		.uleb128 0x9
+ 393 0169 01       		.uleb128 0x1
+ 394 016a 50       		.byte	0x50
+ 395 016b 02       		.uleb128 0x2
+ 396 016c 09       		.byte	0x9
+ 397 016d FF       		.byte	0xff
+ 398 016e 00       		.byte	0
+ 399 016f 08       		.uleb128 0x8
+ 400 0170 4C000000 		.4byte	.LVL10
+ 401 0174 D7020000 		.4byte	0x2d7
+ 402 0178 83010000 		.4byte	0x183
+ 403 017c 09       		.uleb128 0x9
+ 404 017d 01       		.uleb128 0x1
+ 405 017e 50       		.byte	0x50
+ 406 017f 02       		.uleb128 0x2
+ 407 0180 08       		.byte	0x8
+ 408 0181 64       		.byte	0x64
+ 409 0182 00       		.byte	0
+ 410 0183 08       		.uleb128 0x8
+ 411 0184 52000000 		.4byte	.LVL11
+ 412 0188 CC020000 		.4byte	0x2cc
+ 413 018c 97010000 		.4byte	0x197
+ 414 0190 09       		.uleb128 0x9
+ 415 0191 01       		.uleb128 0x1
+ 416 0192 50       		.byte	0x50
+ 417 0193 02       		.uleb128 0x2
+ 418 0194 09       		.byte	0x9
+ 419 0195 80       		.byte	0x80
+ 420 0196 00       		.byte	0
+ 421 0197 08       		.uleb128 0x8
+ 422 0198 58000000 		.4byte	.LVL12
+ 423 019c D7020000 		.4byte	0x2d7
+ 424 01a0 AB010000 		.4byte	0x1ab
+ 425 01a4 09       		.uleb128 0x9
+ 426 01a5 01       		.uleb128 0x1
+ 427 01a6 50       		.byte	0x50
+ 428 01a7 02       		.uleb128 0x2
+ 429 01a8 08       		.byte	0x8
+ 430 01a9 64       		.byte	0x64
+ 431 01aa 00       		.byte	0
+ 432 01ab 08       		.uleb128 0x8
+ 433 01ac 5E000000 		.4byte	.LVL13
+ 434 01b0 CC020000 		.4byte	0x2cc
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 10
+
+
+ 435 01b4 BE010000 		.4byte	0x1be
+ 436 01b8 09       		.uleb128 0x9
+ 437 01b9 01       		.uleb128 0x1
+ 438 01ba 50       		.byte	0x50
+ 439 01bb 01       		.uleb128 0x1
+ 440 01bc 30       		.byte	0x30
+ 441 01bd 00       		.byte	0
+ 442 01be 08       		.uleb128 0x8
+ 443 01bf 64000000 		.4byte	.LVL14
+ 444 01c3 D7020000 		.4byte	0x2d7
+ 445 01c7 D2010000 		.4byte	0x1d2
+ 446 01cb 09       		.uleb128 0x9
+ 447 01cc 01       		.uleb128 0x1
+ 448 01cd 50       		.byte	0x50
+ 449 01ce 02       		.uleb128 0x2
+ 450 01cf 08       		.byte	0x8
+ 451 01d0 64       		.byte	0x64
+ 452 01d1 00       		.byte	0
+ 453 01d2 08       		.uleb128 0x8
+ 454 01d3 74000000 		.4byte	.LVL15
+ 455 01d7 CC020000 		.4byte	0x2cc
+ 456 01db E5010000 		.4byte	0x1e5
+ 457 01df 09       		.uleb128 0x9
+ 458 01e0 01       		.uleb128 0x1
+ 459 01e1 50       		.byte	0x50
+ 460 01e2 01       		.uleb128 0x1
+ 461 01e3 30       		.byte	0x30
+ 462 01e4 00       		.byte	0
+ 463 01e5 08       		.uleb128 0x8
+ 464 01e6 7A000000 		.4byte	.LVL16
+ 465 01ea D7020000 		.4byte	0x2d7
+ 466 01ee F9010000 		.4byte	0x1f9
+ 467 01f2 09       		.uleb128 0x9
+ 468 01f3 01       		.uleb128 0x1
+ 469 01f4 50       		.byte	0x50
+ 470 01f5 02       		.uleb128 0x2
+ 471 01f6 08       		.byte	0x8
+ 472 01f7 64       		.byte	0x64
+ 473 01f8 00       		.byte	0
+ 474 01f9 08       		.uleb128 0x8
+ 475 01fa 80000000 		.4byte	.LVL17
+ 476 01fe CC020000 		.4byte	0x2cc
+ 477 0202 0D020000 		.4byte	0x20d
+ 478 0206 09       		.uleb128 0x9
+ 479 0207 01       		.uleb128 0x1
+ 480 0208 50       		.byte	0x50
+ 481 0209 02       		.uleb128 0x2
+ 482 020a 09       		.byte	0x9
+ 483 020b FF       		.byte	0xff
+ 484 020c 00       		.byte	0
+ 485 020d 08       		.uleb128 0x8
+ 486 020e 86000000 		.4byte	.LVL18
+ 487 0212 D7020000 		.4byte	0x2d7
+ 488 0216 21020000 		.4byte	0x221
+ 489 021a 09       		.uleb128 0x9
+ 490 021b 01       		.uleb128 0x1
+ 491 021c 50       		.byte	0x50
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 11
+
+
+ 492 021d 02       		.uleb128 0x2
+ 493 021e 08       		.byte	0x8
+ 494 021f 64       		.byte	0x64
+ 495 0220 00       		.byte	0
+ 496 0221 08       		.uleb128 0x8
+ 497 0222 8C000000 		.4byte	.LVL19
+ 498 0226 CC020000 		.4byte	0x2cc
+ 499 022a 34020000 		.4byte	0x234
+ 500 022e 09       		.uleb128 0x9
+ 501 022f 01       		.uleb128 0x1
+ 502 0230 50       		.byte	0x50
+ 503 0231 01       		.uleb128 0x1
+ 504 0232 30       		.byte	0x30
+ 505 0233 00       		.byte	0
+ 506 0234 08       		.uleb128 0x8
+ 507 0235 92000000 		.4byte	.LVL20
+ 508 0239 D7020000 		.4byte	0x2d7
+ 509 023d 48020000 		.4byte	0x248
+ 510 0241 09       		.uleb128 0x9
+ 511 0242 01       		.uleb128 0x1
+ 512 0243 50       		.byte	0x50
+ 513 0244 02       		.uleb128 0x2
+ 514 0245 08       		.byte	0x8
+ 515 0246 64       		.byte	0x64
+ 516 0247 00       		.byte	0
+ 517 0248 0A       		.uleb128 0xa
+ 518 0249 98000000 		.4byte	.LVL21
+ 519 024d D7020000 		.4byte	0x2d7
+ 520 0251 09       		.uleb128 0x9
+ 521 0252 01       		.uleb128 0x1
+ 522 0253 50       		.byte	0x50
+ 523 0254 02       		.uleb128 0x2
+ 524 0255 08       		.byte	0x8
+ 525 0256 64       		.byte	0x64
+ 526 0257 00       		.byte	0
+ 527 0258 00       		.byte	0
+ 528 0259 0B       		.uleb128 0xb
+ 529 025a 04       		.byte	0x4
+ 530 025b 68000000 		.4byte	0x68
+ 531 025f 0C       		.uleb128 0xc
+ 532 0260 56010000 		.4byte	.LASF26
+ 533 0264 01       		.byte	0x1
+ 534 0265 17       		.byte	0x17
+ 535 0266 68000000 		.4byte	0x68
+ 536 026a 00000000 		.4byte	.LFB63
+ 537 026e 18000000 		.4byte	.LFE63-.LFB63
+ 538 0272 01       		.uleb128 0x1
+ 539 0273 9C       		.byte	0x9c
+ 540 0274 9A020000 		.4byte	0x29a
+ 541 0278 0D       		.uleb128 0xd
+ 542 0279 08000000 		.4byte	.LVL23
+ 543 027d E2020000 		.4byte	0x2e2
+ 544 0281 0A       		.uleb128 0xa
+ 545 0282 10000000 		.4byte	.LVL24
+ 546 0286 A4000000 		.4byte	0xa4
+ 547 028a 09       		.uleb128 0x9
+ 548 028b 01       		.uleb128 0x1
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 12
+
+
+ 549 028c 50       		.byte	0x50
+ 550 028d 05       		.uleb128 0x5
+ 551 028e 03       		.byte	0x3
+ 552 028f 00000000 		.4byte	.LANCHOR0
+ 553 0293 09       		.uleb128 0x9
+ 554 0294 01       		.uleb128 0x1
+ 555 0295 51       		.byte	0x51
+ 556 0296 01       		.uleb128 0x1
+ 557 0297 33       		.byte	0x33
+ 558 0298 00       		.byte	0
+ 559 0299 00       		.byte	0
+ 560 029a 0E       		.uleb128 0xe
+ 561 029b 1C000000 		.4byte	.LASF18
+ 562 029f 04       		.byte	0x4
+ 563 02a0 1207     		.2byte	0x712
+ 564 02a2 A6020000 		.4byte	0x2a6
+ 565 02a6 0F       		.uleb128 0xf
+ 566 02a7 76000000 		.4byte	0x76
+ 567 02ab 10       		.uleb128 0x10
+ 568 02ac 68000000 		.4byte	0x68
+ 569 02b0 BB020000 		.4byte	0x2bb
+ 570 02b4 11       		.uleb128 0x11
+ 571 02b5 96000000 		.4byte	0x96
+ 572 02b9 02       		.byte	0x2
+ 573 02ba 00       		.byte	0
+ 574 02bb 12       		.uleb128 0x12
+ 575 02bc 87010000 		.4byte	.LASF16
+ 576 02c0 01       		.byte	0x1
+ 577 02c1 15       		.byte	0x15
+ 578 02c2 AB020000 		.4byte	0x2ab
+ 579 02c6 05       		.uleb128 0x5
+ 580 02c7 03       		.byte	0x3
+ 581 02c8 00000000 		.4byte	code
+ 582 02cc 13       		.uleb128 0x13
+ 583 02cd 36000000 		.4byte	.LASF19
+ 584 02d1 36000000 		.4byte	.LASF19
+ 585 02d5 05       		.byte	0x5
+ 586 02d6 41       		.byte	0x41
+ 587 02d7 13       		.uleb128 0x13
+ 588 02d8 07010000 		.4byte	.LASF20
+ 589 02dc 07010000 		.4byte	.LASF20
+ 590 02e0 06       		.byte	0x6
+ 591 02e1 76       		.byte	0x76
+ 592 02e2 13       		.uleb128 0x13
+ 593 02e3 0E000000 		.4byte	.LASF21
+ 594 02e7 0E000000 		.4byte	.LASF21
+ 595 02eb 05       		.byte	0x5
+ 596 02ec 3C       		.byte	0x3c
+ 597 02ed 00       		.byte	0
+ 598              		.section	.debug_abbrev,"",%progbits
+ 599              	.Ldebug_abbrev0:
+ 600 0000 01       		.uleb128 0x1
+ 601 0001 11       		.uleb128 0x11
+ 602 0002 01       		.byte	0x1
+ 603 0003 25       		.uleb128 0x25
+ 604 0004 0E       		.uleb128 0xe
+ 605 0005 13       		.uleb128 0x13
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 13
+
+
+ 606 0006 0B       		.uleb128 0xb
+ 607 0007 03       		.uleb128 0x3
+ 608 0008 0E       		.uleb128 0xe
+ 609 0009 1B       		.uleb128 0x1b
+ 610 000a 0E       		.uleb128 0xe
+ 611 000b 55       		.uleb128 0x55
+ 612 000c 17       		.uleb128 0x17
+ 613 000d 11       		.uleb128 0x11
+ 614 000e 01       		.uleb128 0x1
+ 615 000f 10       		.uleb128 0x10
+ 616 0010 17       		.uleb128 0x17
+ 617 0011 00       		.byte	0
+ 618 0012 00       		.byte	0
+ 619 0013 02       		.uleb128 0x2
+ 620 0014 24       		.uleb128 0x24
+ 621 0015 00       		.byte	0
+ 622 0016 0B       		.uleb128 0xb
+ 623 0017 0B       		.uleb128 0xb
+ 624 0018 3E       		.uleb128 0x3e
+ 625 0019 0B       		.uleb128 0xb
+ 626 001a 03       		.uleb128 0x3
+ 627 001b 0E       		.uleb128 0xe
+ 628 001c 00       		.byte	0
+ 629 001d 00       		.byte	0
+ 630 001e 03       		.uleb128 0x3
+ 631 001f 16       		.uleb128 0x16
+ 632 0020 00       		.byte	0
+ 633 0021 03       		.uleb128 0x3
+ 634 0022 0E       		.uleb128 0xe
+ 635 0023 3A       		.uleb128 0x3a
+ 636 0024 0B       		.uleb128 0xb
+ 637 0025 3B       		.uleb128 0x3b
+ 638 0026 0B       		.uleb128 0xb
+ 639 0027 49       		.uleb128 0x49
+ 640 0028 13       		.uleb128 0x13
+ 641 0029 00       		.byte	0
+ 642 002a 00       		.byte	0
+ 643 002b 04       		.uleb128 0x4
+ 644 002c 24       		.uleb128 0x24
+ 645 002d 00       		.byte	0
+ 646 002e 0B       		.uleb128 0xb
+ 647 002f 0B       		.uleb128 0xb
+ 648 0030 3E       		.uleb128 0x3e
+ 649 0031 0B       		.uleb128 0xb
+ 650 0032 03       		.uleb128 0x3
+ 651 0033 08       		.uleb128 0x8
+ 652 0034 00       		.byte	0
+ 653 0035 00       		.byte	0
+ 654 0036 05       		.uleb128 0x5
+ 655 0037 2E       		.uleb128 0x2e
+ 656 0038 01       		.byte	0x1
+ 657 0039 3F       		.uleb128 0x3f
+ 658 003a 19       		.uleb128 0x19
+ 659 003b 03       		.uleb128 0x3
+ 660 003c 0E       		.uleb128 0xe
+ 661 003d 3A       		.uleb128 0x3a
+ 662 003e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 14
+
+
+ 663 003f 3B       		.uleb128 0x3b
+ 664 0040 0B       		.uleb128 0xb
+ 665 0041 27       		.uleb128 0x27
+ 666 0042 19       		.uleb128 0x19
+ 667 0043 11       		.uleb128 0x11
+ 668 0044 01       		.uleb128 0x1
+ 669 0045 12       		.uleb128 0x12
+ 670 0046 06       		.uleb128 0x6
+ 671 0047 40       		.uleb128 0x40
+ 672 0048 18       		.uleb128 0x18
+ 673 0049 9742     		.uleb128 0x2117
+ 674 004b 19       		.uleb128 0x19
+ 675 004c 01       		.uleb128 0x1
+ 676 004d 13       		.uleb128 0x13
+ 677 004e 00       		.byte	0
+ 678 004f 00       		.byte	0
+ 679 0050 06       		.uleb128 0x6
+ 680 0051 05       		.uleb128 0x5
+ 681 0052 00       		.byte	0
+ 682 0053 03       		.uleb128 0x3
+ 683 0054 0E       		.uleb128 0xe
+ 684 0055 3A       		.uleb128 0x3a
+ 685 0056 0B       		.uleb128 0xb
+ 686 0057 3B       		.uleb128 0x3b
+ 687 0058 0B       		.uleb128 0xb
+ 688 0059 49       		.uleb128 0x49
+ 689 005a 13       		.uleb128 0x13
+ 690 005b 02       		.uleb128 0x2
+ 691 005c 17       		.uleb128 0x17
+ 692 005d 00       		.byte	0
+ 693 005e 00       		.byte	0
+ 694 005f 07       		.uleb128 0x7
+ 695 0060 34       		.uleb128 0x34
+ 696 0061 00       		.byte	0
+ 697 0062 03       		.uleb128 0x3
+ 698 0063 08       		.uleb128 0x8
+ 699 0064 3A       		.uleb128 0x3a
+ 700 0065 0B       		.uleb128 0xb
+ 701 0066 3B       		.uleb128 0x3b
+ 702 0067 0B       		.uleb128 0xb
+ 703 0068 49       		.uleb128 0x49
+ 704 0069 13       		.uleb128 0x13
+ 705 006a 02       		.uleb128 0x2
+ 706 006b 17       		.uleb128 0x17
+ 707 006c 00       		.byte	0
+ 708 006d 00       		.byte	0
+ 709 006e 08       		.uleb128 0x8
+ 710 006f 898201   		.uleb128 0x4109
+ 711 0072 01       		.byte	0x1
+ 712 0073 11       		.uleb128 0x11
+ 713 0074 01       		.uleb128 0x1
+ 714 0075 31       		.uleb128 0x31
+ 715 0076 13       		.uleb128 0x13
+ 716 0077 01       		.uleb128 0x1
+ 717 0078 13       		.uleb128 0x13
+ 718 0079 00       		.byte	0
+ 719 007a 00       		.byte	0
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 15
+
+
+ 720 007b 09       		.uleb128 0x9
+ 721 007c 8A8201   		.uleb128 0x410a
+ 722 007f 00       		.byte	0
+ 723 0080 02       		.uleb128 0x2
+ 724 0081 18       		.uleb128 0x18
+ 725 0082 9142     		.uleb128 0x2111
+ 726 0084 18       		.uleb128 0x18
+ 727 0085 00       		.byte	0
+ 728 0086 00       		.byte	0
+ 729 0087 0A       		.uleb128 0xa
+ 730 0088 898201   		.uleb128 0x4109
+ 731 008b 01       		.byte	0x1
+ 732 008c 11       		.uleb128 0x11
+ 733 008d 01       		.uleb128 0x1
+ 734 008e 31       		.uleb128 0x31
+ 735 008f 13       		.uleb128 0x13
+ 736 0090 00       		.byte	0
+ 737 0091 00       		.byte	0
+ 738 0092 0B       		.uleb128 0xb
+ 739 0093 0F       		.uleb128 0xf
+ 740 0094 00       		.byte	0
+ 741 0095 0B       		.uleb128 0xb
+ 742 0096 0B       		.uleb128 0xb
+ 743 0097 49       		.uleb128 0x49
+ 744 0098 13       		.uleb128 0x13
+ 745 0099 00       		.byte	0
+ 746 009a 00       		.byte	0
+ 747 009b 0C       		.uleb128 0xc
+ 748 009c 2E       		.uleb128 0x2e
+ 749 009d 01       		.byte	0x1
+ 750 009e 3F       		.uleb128 0x3f
+ 751 009f 19       		.uleb128 0x19
+ 752 00a0 03       		.uleb128 0x3
+ 753 00a1 0E       		.uleb128 0xe
+ 754 00a2 3A       		.uleb128 0x3a
+ 755 00a3 0B       		.uleb128 0xb
+ 756 00a4 3B       		.uleb128 0x3b
+ 757 00a5 0B       		.uleb128 0xb
+ 758 00a6 27       		.uleb128 0x27
+ 759 00a7 19       		.uleb128 0x19
+ 760 00a8 49       		.uleb128 0x49
+ 761 00a9 13       		.uleb128 0x13
+ 762 00aa 8701     		.uleb128 0x87
+ 763 00ac 19       		.uleb128 0x19
+ 764 00ad 11       		.uleb128 0x11
+ 765 00ae 01       		.uleb128 0x1
+ 766 00af 12       		.uleb128 0x12
+ 767 00b0 06       		.uleb128 0x6
+ 768 00b1 40       		.uleb128 0x40
+ 769 00b2 18       		.uleb128 0x18
+ 770 00b3 9742     		.uleb128 0x2117
+ 771 00b5 19       		.uleb128 0x19
+ 772 00b6 01       		.uleb128 0x1
+ 773 00b7 13       		.uleb128 0x13
+ 774 00b8 00       		.byte	0
+ 775 00b9 00       		.byte	0
+ 776 00ba 0D       		.uleb128 0xd
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 16
+
+
+ 777 00bb 898201   		.uleb128 0x4109
+ 778 00be 00       		.byte	0
+ 779 00bf 11       		.uleb128 0x11
+ 780 00c0 01       		.uleb128 0x1
+ 781 00c1 31       		.uleb128 0x31
+ 782 00c2 13       		.uleb128 0x13
+ 783 00c3 00       		.byte	0
+ 784 00c4 00       		.byte	0
+ 785 00c5 0E       		.uleb128 0xe
+ 786 00c6 34       		.uleb128 0x34
+ 787 00c7 00       		.byte	0
+ 788 00c8 03       		.uleb128 0x3
+ 789 00c9 0E       		.uleb128 0xe
+ 790 00ca 3A       		.uleb128 0x3a
+ 791 00cb 0B       		.uleb128 0xb
+ 792 00cc 3B       		.uleb128 0x3b
+ 793 00cd 05       		.uleb128 0x5
+ 794 00ce 49       		.uleb128 0x49
+ 795 00cf 13       		.uleb128 0x13
+ 796 00d0 3F       		.uleb128 0x3f
+ 797 00d1 19       		.uleb128 0x19
+ 798 00d2 3C       		.uleb128 0x3c
+ 799 00d3 19       		.uleb128 0x19
+ 800 00d4 00       		.byte	0
+ 801 00d5 00       		.byte	0
+ 802 00d6 0F       		.uleb128 0xf
+ 803 00d7 35       		.uleb128 0x35
+ 804 00d8 00       		.byte	0
+ 805 00d9 49       		.uleb128 0x49
+ 806 00da 13       		.uleb128 0x13
+ 807 00db 00       		.byte	0
+ 808 00dc 00       		.byte	0
+ 809 00dd 10       		.uleb128 0x10
+ 810 00de 01       		.uleb128 0x1
+ 811 00df 01       		.byte	0x1
+ 812 00e0 49       		.uleb128 0x49
+ 813 00e1 13       		.uleb128 0x13
+ 814 00e2 01       		.uleb128 0x1
+ 815 00e3 13       		.uleb128 0x13
+ 816 00e4 00       		.byte	0
+ 817 00e5 00       		.byte	0
+ 818 00e6 11       		.uleb128 0x11
+ 819 00e7 21       		.uleb128 0x21
+ 820 00e8 00       		.byte	0
+ 821 00e9 49       		.uleb128 0x49
+ 822 00ea 13       		.uleb128 0x13
+ 823 00eb 2F       		.uleb128 0x2f
+ 824 00ec 0B       		.uleb128 0xb
+ 825 00ed 00       		.byte	0
+ 826 00ee 00       		.byte	0
+ 827 00ef 12       		.uleb128 0x12
+ 828 00f0 34       		.uleb128 0x34
+ 829 00f1 00       		.byte	0
+ 830 00f2 03       		.uleb128 0x3
+ 831 00f3 0E       		.uleb128 0xe
+ 832 00f4 3A       		.uleb128 0x3a
+ 833 00f5 0B       		.uleb128 0xb
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 17
+
+
+ 834 00f6 3B       		.uleb128 0x3b
+ 835 00f7 0B       		.uleb128 0xb
+ 836 00f8 49       		.uleb128 0x49
+ 837 00f9 13       		.uleb128 0x13
+ 838 00fa 3F       		.uleb128 0x3f
+ 839 00fb 19       		.uleb128 0x19
+ 840 00fc 02       		.uleb128 0x2
+ 841 00fd 18       		.uleb128 0x18
+ 842 00fe 00       		.byte	0
+ 843 00ff 00       		.byte	0
+ 844 0100 13       		.uleb128 0x13
+ 845 0101 2E       		.uleb128 0x2e
+ 846 0102 00       		.byte	0
+ 847 0103 3F       		.uleb128 0x3f
+ 848 0104 19       		.uleb128 0x19
+ 849 0105 3C       		.uleb128 0x3c
+ 850 0106 19       		.uleb128 0x19
+ 851 0107 6E       		.uleb128 0x6e
+ 852 0108 0E       		.uleb128 0xe
+ 853 0109 03       		.uleb128 0x3
+ 854 010a 0E       		.uleb128 0xe
+ 855 010b 3A       		.uleb128 0x3a
+ 856 010c 0B       		.uleb128 0xb
+ 857 010d 3B       		.uleb128 0x3b
+ 858 010e 0B       		.uleb128 0xb
+ 859 010f 00       		.byte	0
+ 860 0110 00       		.byte	0
+ 861 0111 00       		.byte	0
+ 862              		.section	.debug_loc,"",%progbits
+ 863              	.Ldebug_loc0:
+ 864              	.LLST0:
+ 865 0000 00000000 		.4byte	.LVL0
+ 866 0004 0A000000 		.4byte	.LVL2
+ 867 0008 0100     		.2byte	0x1
+ 868 000a 50       		.byte	0x50
+ 869 000b 0A000000 		.4byte	.LVL2
+ 870 000f A0000000 		.4byte	.LFE64
+ 871 0013 0100     		.2byte	0x1
+ 872 0015 55       		.byte	0x55
+ 873 0016 00000000 		.4byte	0
+ 874 001a 00000000 		.4byte	0
+ 875              	.LLST1:
+ 876 001e 00000000 		.4byte	.LVL0
+ 877 0022 0A000000 		.4byte	.LVL2
+ 878 0026 0100     		.2byte	0x1
+ 879 0028 51       		.byte	0x51
+ 880 0029 0A000000 		.4byte	.LVL2
+ 881 002d A0000000 		.4byte	.LFE64
+ 882 0031 0100     		.2byte	0x1
+ 883 0033 57       		.byte	0x57
+ 884 0034 00000000 		.4byte	0
+ 885 0038 00000000 		.4byte	0
+ 886              	.LLST2:
+ 887 003c 06000000 		.4byte	.LVL1
+ 888 0040 0A000000 		.4byte	.LVL2
+ 889 0044 0200     		.2byte	0x2
+ 890 0046 30       		.byte	0x30
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 18
+
+
+ 891 0047 9F       		.byte	0x9f
+ 892 0048 0A000000 		.4byte	.LVL2
+ 893 004c A0000000 		.4byte	.LFE64
+ 894 0050 0100     		.2byte	0x1
+ 895 0052 54       		.byte	0x54
+ 896 0053 00000000 		.4byte	0
+ 897 0057 00000000 		.4byte	0
+ 898              		.section	.debug_aranges,"",%progbits
+ 899 0000 24000000 		.4byte	0x24
+ 900 0004 0200     		.2byte	0x2
+ 901 0006 00000000 		.4byte	.Ldebug_info0
+ 902 000a 04       		.byte	0x4
+ 903 000b 00       		.byte	0
+ 904 000c 0000     		.2byte	0
+ 905 000e 0000     		.2byte	0
+ 906 0010 00000000 		.4byte	.LFB64
+ 907 0014 A0000000 		.4byte	.LFE64-.LFB64
+ 908 0018 00000000 		.4byte	.LFB63
+ 909 001c 18000000 		.4byte	.LFE63-.LFB63
+ 910 0020 00000000 		.4byte	0
+ 911 0024 00000000 		.4byte	0
+ 912              		.section	.debug_ranges,"",%progbits
+ 913              	.Ldebug_ranges0:
+ 914 0000 00000000 		.4byte	.LFB64
+ 915 0004 A0000000 		.4byte	.LFE64
+ 916 0008 00000000 		.4byte	.LFB63
+ 917 000c 18000000 		.4byte	.LFE63
+ 918 0010 00000000 		.4byte	0
+ 919 0014 00000000 		.4byte	0
+ 920              		.section	.debug_line,"",%progbits
+ 921              	.Ldebug_line0:
+ 922 0000 98010000 		.section	.debug_str,"MS",%progbits,1
+ 922      02004101 
+ 922      00000201 
+ 922      FB0E0D00 
+ 922      01010101 
+ 923              	.LASF6:
+ 924 0000 6C6F6E67 		.ascii	"long long int\000"
+ 924      206C6F6E 
+ 924      6720696E 
+ 924      7400
+ 925              	.LASF21:
+ 926 000e 49444143 		.ascii	"IDAC8_1_Start\000"
+ 926      385F315F 
+ 926      53746172 
+ 926      7400
+ 927              	.LASF18:
+ 928 001c 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 928      52784275 
+ 928      66666572 
+ 928      00
+ 929              	.LASF8:
+ 930 0029 756E7369 		.ascii	"unsigned int\000"
+ 930      676E6564 
+ 930      20696E74 
+ 930      00
+ 931              	.LASF19:
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 19
+
+
+ 932 0036 49444143 		.ascii	"IDAC8_1_SetValue\000"
+ 932      385F315F 
+ 932      53657456 
+ 932      616C7565 
+ 932      00
+ 933              	.LASF23:
+ 934 0047 6D61696E 		.ascii	"main.c\000"
+ 934      2E6300
+ 935              	.LASF24:
+ 936 004e 453A5C42 		.ascii	"E:\\Bench\\Laba 2\\Workspace01\\Design01.cydsn\000"
+ 936      656E6368 
+ 936      5C4C6162 
+ 936      6120325C 
+ 936      576F726B 
+ 937              	.LASF22:
+ 938 0079 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 938      43313120 
+ 938      352E342E 
+ 938      31203230 
+ 938      31363036 
+ 939 00ac 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 939      20726576 
+ 939      6973696F 
+ 939      6E203233 
+ 939      37373135 
+ 940 00df 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 940      66756E63 
+ 940      74696F6E 
+ 940      2D736563 
+ 940      74696F6E 
+ 941              	.LASF20:
+ 942 0107 43794465 		.ascii	"CyDelay\000"
+ 942      6C617900 
+ 943              	.LASF5:
+ 944 010f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 944      20756E73 
+ 944      69676E65 
+ 944      6420696E 
+ 944      7400
+ 945              	.LASF25:
+ 946 0121 48444233 		.ascii	"HDB3_Codec\000"
+ 946      5F436F64 
+ 946      656300
+ 947              	.LASF7:
+ 948 012c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 948      206C6F6E 
+ 948      6720756E 
+ 948      7369676E 
+ 948      65642069 
+ 949              	.LASF3:
+ 950 0143 73686F72 		.ascii	"short unsigned int\000"
+ 950      7420756E 
+ 950      7369676E 
+ 950      65642069 
+ 950      6E7400
+ 951              	.LASF26:
+ 952 0156 6D61696E 		.ascii	"main\000"
+ARM GAS  C:\Users\yurao\AppData\Local\Temp\ccrDXDGP.s 			page 20
+
+
+ 952      00
+ 953              	.LASF1:
+ 954 015b 756E7369 		.ascii	"unsigned char\000"
+ 954      676E6564 
+ 954      20636861 
+ 954      7200
+ 955              	.LASF17:
+ 956 0169 73697A65 		.ascii	"sizeArey\000"
+ 956      41726579 
+ 956      00
+ 957              	.LASF13:
+ 958 0172 63686172 		.ascii	"char\000"
+ 958      00
+ 959              	.LASF4:
+ 960 0177 6C6F6E67 		.ascii	"long int\000"
+ 960      20696E74 
+ 960      00
+ 961              	.LASF12:
+ 962 0180 646F7562 		.ascii	"double\000"
+ 962      6C6500
+ 963              	.LASF16:
+ 964 0187 636F6465 		.ascii	"code\000"
+ 964      00
+ 965              	.LASF0:
+ 966 018c 7369676E 		.ascii	"signed char\000"
+ 966      65642063 
+ 966      68617200 
+ 967              	.LASF15:
+ 968 0198 6C6F6E67 		.ascii	"long double\000"
+ 968      20646F75 
+ 968      626C6500 
+ 969              	.LASF9:
+ 970 01a4 5F5F696E 		.ascii	"__int32_t\000"
+ 970      7433325F 
+ 970      7400
+ 971              	.LASF11:
+ 972 01ae 666C6F61 		.ascii	"float\000"
+ 972      7400
+ 973              	.LASF2:
+ 974 01b4 73686F72 		.ascii	"short int\000"
+ 974      7420696E 
+ 974      7400
+ 975              	.LASF10:
+ 976 01be 696E7433 		.ascii	"int32_t\000"
+ 976      325F7400 
+ 977              	.LASF14:
+ 978 01c6 73697A65 		.ascii	"sizetype\000"
+ 978      74797065 
+ 978      00
+ 979              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
