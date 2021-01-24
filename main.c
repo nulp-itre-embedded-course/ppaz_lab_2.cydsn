@@ -11,7 +11,7 @@
 */
 #include "project.h"
 
-void HDB3_Codec(int* code, int sizeArey);
+void HDB3_Codec(int* code, int sizeArey); // Прототип функції
 //void outIDAC(int* code, int sizeArey);
 
 #define HIGH_LEVEL 255
@@ -23,17 +23,13 @@ int code [12] = {1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0};
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
-    IDAC8_1_Start();
+    IDAC8_1_Start(); // Ініціалізація iDAC і початок його роботи.
     
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     for(;;)
     {
-       /* IDAC8_1_SetValue(128);
-        CyDelay(500);
-        IDAC8_1_SetValue(-128);
-        CyDelay(500);
-        */
+
         HDB3_Codec(code, 12);
         
     }
@@ -42,8 +38,8 @@ int main(void)
 
 void HDB3_Codec(int* code, int sizeArey)
 {
-    int flagPoliariti = 0;
-    int counter = 0;
+    int flagPoliariti = 0; // Змінна для зберігання полярності останнього біта 
+    int counter = 0;       // Змінна для підрахунку кількості нулів що йдуть підряд
     int i;
     for(i = 0; i < sizeArey; i++)
     {
