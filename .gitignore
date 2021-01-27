@@ -68,6 +68,7 @@ dkms.conf
 # My updates for PSOC4
 *.log
 CortexM0/
+CortexM3/
 Export/
 codegentemp/
 Generated_Source/
